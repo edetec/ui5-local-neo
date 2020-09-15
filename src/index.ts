@@ -5,8 +5,10 @@ import path from 'path';
 import { DestinationFactory } from './factories/destination';
 import { Ui5MiddlewareOptions } from './helpers/protocols';
 
-const createMiddleware = (ui5MiddlewareOptions: Ui5MiddlewareOptions) => {
-    const projectPath = ui5MiddlewareOptions.resources.rootProject._readers[0]._project.path;
+const createMiddleware = (ui5MiddlewareOptions: Ui5MiddlewareOptions | string) => {
+
+    const projectPath = typeof ui5MiddlewareOptions === 'string'? ui5MiddlewareOptions : ui5MiddlewareOptions.resources.rootProject._readers[0]._project.path;
+    console.log(`path: ${JSON.stringify(ui5MiddlewareOptions)}`);
     const routes = require(path.resolve(projectPath, 'neo-app.json')).routes;
     const destinations = require(path.resolve(projectPath, 'destinations.json'));
 
